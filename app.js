@@ -77,6 +77,17 @@ for (let prop in endpoints.types) {
                     }));
                 }
             });
+            busboy.on('field', (name, val, info) => {
+                if (name == 'outputOptions' && val) {
+                    var newOutputOptions = val.split(';')
+                    winston.info(JSON.stringify({
+                        event: 'found outputOptions to override the existing ones',
+                        existing: ffmpegParams.outputOptions,
+                        new: newOutputOptions
+                    }));
+                    ffmpegParams.outputOptions = newOutputOptions
+                }
+            });
             busboy.on('finish', function() {
                 if (hitLimit) {
                     fs.unlinkSync(savedFile);
