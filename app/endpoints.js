@@ -1,4 +1,4 @@
-exports.types = {
+const defaultTypes = {
     jpg: {
         extension: 'jpg',
         outputOptions: [
@@ -35,3 +35,10 @@ exports.types = {
         ],
     },
 };
+
+const externalEndpoints = process.env.ENDPOINTS;
+console.log(externalEndpoints || 'Custom endpoints not found.');
+
+exports.types = externalEndpoints
+    ? JSON.parse(externalEndpoints)
+    : defaultTypes;

@@ -33,8 +33,22 @@ Curl Ex:
 > curl -F "file=@input.png" -F 'outputOptions=-codec:v libx264;-crf 20' 127.0.0.1:3000/mp4  > output.mp4
 
 ## Configuration and New Endpoints
-You can change the ffmpeg conversion settings or add new endpoints by editing 
-the /app/endpoints.js file
+You can replace the ffmpeg conversion settings by environment variable ENDPOINTS:
+
+    # docker-composer.yml
+
+    ...
+    environment:
+      ENDPOINTS: |
+        {
+          "mp4": {
+            "extension": "mp4",
+            "outputOptions": [
+              "-fflags +genpts",
+              "-r 24"
+            ]
+          }
+        }
 
 You can also change the conversion settings on the fly using the outputOptions parameter with each option separated with ';' (see an example above)
 

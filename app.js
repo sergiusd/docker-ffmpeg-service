@@ -9,6 +9,11 @@ const consts = require(__dirname + '/app/constants.js');
 const endpoints = require(__dirname + '/app/endpoints.js');
 const winston = require('winston');
 
+const uploadsDir = './uploads';
+if (!fs.existsSync(uploadsDir)) {
+    fs.mkdirSync(uploadsDir);
+}
+
 app.use(compression());
 winston.remove(winston.transports.Console);
 winston.add(winston.transports.Console, {'timestamp': true});
