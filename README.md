@@ -32,6 +32,15 @@ Curl Ex:
 
 > curl -F "file=@input.png" -F 'outputOptions=-codec:v libx264;-crf 20' 127.0.0.1:3000/mp4  > output.mp4
 
+> curl -X POST http://localhost:3000/screenshot \
+    -H "Content-Type: application/json" \
+    -d '{
+        "playlistUrl": "https://site.com/playlist.m3u8",
+        "sec": "00:00:05.500",
+        "userAgent": "Some User-Agent"
+    }' \
+    --output screenshot.jpg
+
 ## Configuration and New Endpoints
 You can replace the ffmpeg conversion settings by environment variable ENDPOINTS:
 
