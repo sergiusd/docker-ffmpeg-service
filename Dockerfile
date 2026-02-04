@@ -1,38 +1,24 @@
-FROM node:16-bullseye-slim
+FROM node:18-alpine
 
 LABEL maintainer="Sergei Demchuk <sergiusdem@gmail.com>"
 
 # FFmpeg
-RUN apt-get update && \
-    apt-get install -y ffmpeg git && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+RUN apk add --no-cache ffmpeg git
 
-WORKDIR /usr/local/src
-
-# Custom Builds go here
-RUN npm install -g fluent-ffmpeg
-
-# Cleanup
-WORKDIR /usr/local/
-RUN rm -rf /usr/local/src
-
-WORKDIR /work
-
-# Make sure Node.js and FFmpeg are installed
-RUN node -v && npm -v && ffmpeg -version
-
-# Create app dir
-RUN mkdir -p /usr/src/app
+# Create app directory
 WORKDIR /usr/src/app
 
-# Install Dependencies
-COPY package.json /usr/src/app/
-RUN npm install
+# Copy package files
+COPY package.json package-lock.json* ./
+
+# Install app dependencies
+RUN npm ci --only=production || npm install --only=production
 
 # Bundle app source
-COPY . /usr/src/app
+COPY . .
+
+# Verify installations
+RUN node -v && npm -v && ffmpeg -version
 
 EXPOSE 3000
-ENTRYPOINT []
 CMD ["node", "app.js"]
