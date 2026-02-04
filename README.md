@@ -11,6 +11,8 @@ Based off of jrottenberg/ffmpeg container
 > POST /mp4 - Convert video file in request body to mp4
 
 > POST /jpg - Convert image file to jpg
+ 
+> POST /screenshot - Create screenshot on time from m3u8 playlist
 
 > GET /, /readme - Web Service Readme
 
@@ -36,7 +38,7 @@ Curl Ex:
     -H "Content-Type: application/json" \
     -d '{
         "playlistUrl": "https://site.com/playlist.m3u8",
-        "sec": "00:00:05.500",
+        "timestamp": "00:00:05.500",
         "userAgent": "Some User-Agent"
     }' \
     --output screenshot.jpg
@@ -87,7 +89,7 @@ Check for errors with ESLint:
 ## Running Local Docker Container
 
 Build Docker Image from Dockerfile with a set image tag. ex: docker-ffpmeg
-> $ docker build -t surebert/docker-ffpmeg .
+> $ docker build -t sergiusd/docker-ffpmeg .
 
 Launch Docker Container from Docker Image, exposing port 9025 on localhost only
 
@@ -96,7 +98,7 @@ Launch Docker Container from Docker Image, exposing port 9025 on localhost only
     --restart=always \
     -v /storage/tmpfs:/usr/src/app/uploads \
     -p 127.0.0.1:9025:3000 \
-    surebert/docker-ffpmeg
+    sergiusd/docker-ffpmeg
 
 Launch Docker Container from Docker Image, exposing port 9026 on all IPs
-> docker run -p 9025:3000 -d surebert/docker-ffpmeg
+> docker run -p 9025:3000 -d sergiusd/docker-ffpmeg

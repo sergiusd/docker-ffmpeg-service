@@ -166,7 +166,7 @@ app.post('/screenshot', function(req, res) {
         try {
             const data = JSON.parse(body);
 
-            if (!data.playlistUrl || !data.sec) {
+            if (!data.playlistUrl || !data.timestamp) {
                 res.writeHead(400, {'Content-Type': 'application/json'});
                 res.end(JSON.stringify({error: 'playlistUrl and sec are required'}));
                 return;
@@ -177,12 +177,12 @@ app.post('/screenshot', function(req, res) {
             winston.info(JSON.stringify({
                 action: 'screenshot conversion request',
                 playlistUrl: data.playlistUrl,
-                timestamp: data.sec,
+                timestamp: data.timestamp,
                 userAgent: data.userAgent || 'none',
             }));
 
             let ffmpegCommand = ffmpeg(data.playlistUrl);
-            let inputOptions = ['-ss', data.sec];
+            let inputOptions = ['-ss', data.timestamp];
 
             if (data.userAgent) {
                 inputOptions.push('-user_agent');

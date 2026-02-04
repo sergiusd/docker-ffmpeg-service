@@ -4,8 +4,8 @@
   "description": "media conversion utilities",
   "main": "index.js",
   "author": {
-    "name": "Paul Visco",
-    "email": "paul.visco@gmail.com"
+    "name": "Sergei Demchuk",
+    "email": "sergiusdem@gmail.com"
   },
   "license": "ISC",
   "dependencies": {
