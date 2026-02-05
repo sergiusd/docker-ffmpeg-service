@@ -116,7 +116,7 @@ for (let prop in endpoints.types) {
                     .on('error', function(err) {
                         let log = JSON.stringify({
                             type: 'ffmpeg',
-                            message: err,
+                            message: err.message || err.toString(),
                         });
                         winston.error(log);
                         fs.unlinkSync(savedFile);
@@ -134,7 +134,7 @@ for (let prop in endpoints.types) {
                             if (err) {
                                 winston.error(JSON.stringify({
                                     type: 'download',
-                                    message: err,
+                                    message: err.message || err.toString(),
                                 }));
                             }
                             winston.info(JSON.stringify({
@@ -199,7 +199,7 @@ app.post('/screenshot', function(req, res) {
                 .on('error', function(err) {
                     let log = JSON.stringify({
                         type: 'ffmpeg',
-                        message: err.message,
+                        message: err.message || err.toString(),
                     });
                     winston.error(log);
                     res.writeHead(500, {'Connection': 'close'});
@@ -215,7 +215,7 @@ app.post('/screenshot', function(req, res) {
                         if (err) {
                             winston.error(JSON.stringify({
                                 type: 'download',
-                                message: err.message,
+                                message: err.message || err.toString(),
                             }));
                         }
 
@@ -238,7 +238,7 @@ app.post('/screenshot', function(req, res) {
         } catch (err) {
             winston.error(JSON.stringify({
                 type: 'parse error',
-                message: err.message,
+                message: err.message || err.toString(),
             }));
             res.writeHead(400, {'Content-Type': 'application/json'});
             res.end(JSON.stringify({error: 'Invalid JSON: ' + err.message}));
